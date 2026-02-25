@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kapil & Kaptan Birthday</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#080707;
+    color:white;
+    text-align:center;
+}
+
+/* Heading */
+h1{
+    margin-top:20px;
+    font-size:20px;
+    color:gold;
+}
+
+.subtitle{
+    font-size:12px;
+    opacity:0.7;
+}
+
+/* Timer */
+.timer{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin:15px 0;
+}
+
+.time-box{
+    background:#0a0a0a;
+    padding:8px 10px;
+    border-radius:10px;
+    min-width:45px;
+    box-shadow:0 0 8px rgba(255,215,0,0.4);
+}
+
+.time-box span{
+    display:block;
+    font-size:14px;
+    color:#ffcc00;
+}
+
+.label{
+    font-size:9px;
+    opacity:0.6;
+}
+
+/* Cake */
+.cake{
+    font-size:55px;
+    margin:15px 0;
+    cursor:pointer;
+}
+
+/* Cards */
+.card{
+    background:#0a0a0a;
+    margin:15px auto;
+    padding:15px;
+    width:240px;
+    border-radius:10px;
+    font-size:13px;
+}
+
+.card h2{
+    font-size:14px;
+    color:gold;
+}
+
+/* Memories */
+.memories{
+    margin:40px 0;
+}
+
+.gallery{
+    display:grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap:12px;
+    width:90%;
+    max-width:900px;
+    margin:20px auto;
+}
+
+.gallery img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    border-radius:12px;
+    transition:0.4s;
+    cursor:pointer;
+    box-shadow:0 0 10px rgba(255,215,0,0.2);
+}
+
+/* 3-4 pattern */
+.gallery img:nth-child(7n+1),
+.gallery img:nth-child(7n+2),
+.gallery img:nth-child(7n+3){
+    grid-column: span 2;
+}
+
+.gallery img:nth-child(7n+4),
+.gallery img:nth-child(7n+5),
+.gallery img:nth-child(7n+6),
+.gallery img:nth-child(7n+7){
+    grid-column: span 1;
+}
+
+/* Imagination hover */
+.gallery img:hover{
+    transform:scale(1.08) rotate(-2deg);
+    box-shadow:0 0 20px gold;
+    filter:brightness(1.1);
+}
+
+/* Password */
+.lock-box input{
+    padding:5px;
+    font-size:11px;
+}
+
+.lock-box button{
+    padding:5px 10px;
+    font-size:11px;
+    background:gold;
+    border:none;
+    border-radius:10px;
+}
+
+/* Fullscreen birthday */
+#birthdayScreen{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgb(12, 12, 12);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:999;
+}
+
+.big-text{
+    font-size:28px;
+    color:gold;
+    animation:pop 1s infinite alternate;
+}
+
+@keyframes pop{
+    from{transform:scale(1);}
+    to{transform:scale(1.1);}
+}
+
+/* Fireworks */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+}
+
+/* Footer */
+footer{
+    margin:25px 0;
+    font-size:12px;
+    color:gold;
+    opacity:0.8;
+}
+
+@media(max-width:768px){
+    .gallery{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<h1>Happy Birthday</h1>
+<div class="subtitle">Kapil & Kaptan 👑</div>
+
+
+
+<div class="cake" onclick="cutCake()" id="cake">🎂</div>
+ <h3 style="font-size: medium;">Cut the cake</h3>
+
+<div class="card">
+<h2>Kapil</h2>
+<p>Happy Birthday bro 🎂🔥
+Tu sirf dost nahi, meri life ka sabse strong support system hai.
+Har mushkil me mere sath khada rehne ke liye thank you.
+Bhagwan kare is saal tujhe success, paisa aur unlimited happiness mile 💰✨
+Stay focused, stay powerful, aur hamesha aise hi loyal rehna 💪
+Love you bhai ❤️</p>
+</div>
+
+<div class="card">
+<h2>Kaptan</h2>
+<p>Happy Birthday legend 🎉👑
+Teri wajah se meri life me itni hasi aur masti hai 😆🔥
+Tu tension kam karta hai aur confidence badhata hai.
+Is saal tera har sapna pura ho, aur life me sirf growth hi growth ho 📈✨
+Stay crazy, stay ambitious, aur kabhi change mat hona 💙
+Always your partner in crime 🤝🔥</p>
+</div>
+
+<!-- Memories -->
+<div class="memories">
+<h2 style="font-size:14px;color:gold;">Memories 🔒</h2>
+
+<div class="lock-box">
+<input type="password" id="pass" placeholder="Enter password">
+<button onclick="checkPass()">Unlock</button>
+</div>
+
+<div class="gallery" id="gallery" style="display:none;">
+<img src="2.jpeg">
+<img src="1.jpeg">
+<img src="3.jpeg">
+<img src="5.jpeg">
+<img src="4.jpeg">
+<img src="6.jpeg">
+<img src="7.jpeg">
+<img src="8.jpeg">
+<img src="9.jpeg">
+
+</div>
+</div>
+
+<footer>
+✨ Made by Goutam ❤️
+</footer>
+
+<!-- Birthday Screen -->
+<div id="birthdayScreen">
+<div class="big-text">🎉 HAPPY BIRTHDAY LEGENDS 🎉</div>
+</div>
+
+<script>
+
+ 
+/* Password */
+function checkPass(){
+    if(document.getElementById("pass").value==="29022004"){
+        document.getElementById("gallery").style.display="grid";
+    }else{
+        alert("Wrong Password ❌");
+    }
+}
+
+/* Cake */
+function cutCake(){
+    let cake=document.getElementById("cake");
+    cake.innerHTML="🍰";
+    setTimeout(()=>{cake.innerHTML="🎉";},1000);
+}
+
+/* Fireworks */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+function createFirework(){
+    let x=Math.random()*canvas.width;
+    let y=Math.random()*canvas.height/2;
+    for(let i=0;i<20;i++){
+        particles.push({
+            x:x,y:y,
+            radius:2,
+            color:`hsl(${Math.random()*360},100%,50%)`,
+            speedX:(Math.random()-0.5)*4,
+            speedY:(Math.random()-0.5)*4,
+            life:1000
+        });
+    }
+}
+
+function animate(){
+    ctx.fillStyle="rgba(0,0,0,0.2)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    particles.forEach((p,i)=>{
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+        ctx.fillStyle=p.color;
+        ctx.fill();
+        p.x+=p.speedX;
+        p.y+=p.speedY;
+        p.life--;
+        if(p.life<=0) particles.splice(i,1);
+    });
+    requestAnimationFrame(animate);
+}
+setInterval(createFirework,900);
+animate();
+</script>
+
+</body>
+</html>
